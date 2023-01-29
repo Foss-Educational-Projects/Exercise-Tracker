@@ -1,0 +1,4 @@
+{
+	"watch": ["src"],
+	"ext": "hbs handlebars js json"
+}

@@ -1,0 +1,265 @@
+:root {
+	--input-bg-color:rgba(255,255,255,0.2);
+	--button-bg-color:chocolate;
+	--button-fg-color:white;
+	--form-bg-color:rgba(0,0,0,0.8);
+	--box-shadow-color:orange;
+	--default-text-color:whitesmoke;
+	--form-box-shadow-color: chocolate;
+	--app-title-icon-color: palegreen;
+	--accent-color:lightblue;
+	--app-title-fg-color: rgba(255,255,255,0.1);
+	--default-font:"Noto Sans", sans-serif;
+	--scrollbar-bg-color:yellow;
+	--scrollbar-thumb-bg-color:whitesmoke;
+	--scrollbar-track-bg-color:chocolate;
+	
+
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    font-family: var(--default-font);
+    color: var(--default-text-color);
+}
+body::-webkit-scrollbar {
+	border-radius: 10px;
+	width: 8px;
+	background-color: var(--scrollbar-track-bg-color);
+}
+body::-webkit-scrollbar-thumb {
+	background-color: var(--scrollbar-thumb-bg-color);
+	border-radius: 10px;
+}
+
+.exercise-tracker {
+    width: inherit;
+    min-height: inherit;
+    padding: 10px;
+    background-image: url('./../images/workout.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    display: grid;
+	grid-template-areas: 
+	"header header"
+	"user exercise"
+	"fetch fetch";
+	grid-auto-rows: minmax(400px, auto);
+	grid-auto-flow: row;
+	grid-gap: 10px;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: 50px 1fr;
+    align-items: center;
+    justify-content: center;
+}
+.exercise-tracker header {
+	grid-area: header;
+	text-align: center;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+}
+.exercise-tracker header span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 5px 10px;
+	background-color: var(--app-title-fg-color);
+	border-radius: 30px;
+	backdrop-filter: blur(2px);
+}
+.exercise-tracker header i.fa-bars-progress {
+	font-size: 2em;
+	margin-left: 5px;
+	color: var(--app-title-icon-color);
+}
+section {
+	width: 100%;
+	background: var(--form-bg-color);
+	backdrop-filter: blur(2px);
+	box-shadow: 0 0 20px var(--form-box-shadow-color);
+	padding: 10px;
+	border-radius: 10px;
+	height: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+
+}
+.create-user-section {
+	grid-area: user;
+}
+.add-exercise-section {
+	grid-area: exercise;
+}
+.fetch-user-info {
+	grid-area: fetch;
+	font-size: 1.2em;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.fetch-user-info div {
+	text-align: left;
+}
+.fetch-user-info header h3 {
+	margin: 0 10px;
+}
+.fetch-user-info header i.fa-circle-info {
+	font-size: 1.2em;
+}
+section header {
+	margin: 10px 0;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center!important;
+}
+section header h2 {
+	padding: 0 5px;
+}
+section header i {
+	color: var(--app-title-icon-color);
+}
+section header i.fa-dumbbell {
+	font-size: 1.5em;
+	transform: rotateZ(90deg);
+}
+section header i.fa-circle-user {
+	font-size: 1.5em;
+}
+
+.form {
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+.form .input-section {
+	display: grid;
+	margin: 5px 0;
+	align-items: center;
+	border-radius: 10px;
+	justify-content: center;
+	grid-template-columns: 35px 1fr 20px;
+	width: 95%;
+	background-color: var(--input-bg-color);
+	padding:0 10px;
+	transition: box-shadow, 100ms ease-in-out;
+}
+.form .input-section:focus {
+	transition: box-shadow, 100ms ease-in-out;
+	box-shadow: 0 0 10px var(--box-shadow-color);
+}
+.form .input-section i {
+	font-size:1.3em;
+	text-align: center;
+	color: var(--accent-color);
+	
+}
+.form .input-section i.fa-asterisk {
+	font-size: 1em;
+}
+
+.form .input-section input.form-input {
+	color: var(--default-text-color);
+	outline: none;
+	border: none;
+	height: 100%;
+	width: 100%;
+	font-size: 1.05em;
+	background: transparent;
+	padding: 5px 10px;
+	border-radius: 10px;
+	margin: 10px 0;
+	
+}
+
+.form .input-section input.form-input::placeholder {
+	color: var(--default-text-color);
+	font-family: var(--default-font);
+}
+.form button {
+	margin-top: 5px;
+	background: none;
+	outline: none;
+	border:none;
+	background: var(--button-bg-color);
+	color: var(--button-fg-color);
+	padding: 10px;
+	font-size: 1.1em;
+	font-family: var(--default-font);
+	border-radius: 10px;
+	width: 50%;
+}
+.form header {
+	text-align: center;
+	border-radius: 10px 10px 5px 5px;
+}
+.hint-section {
+	width: 85%;
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	border-radius: 5px 5px 10px 10px;
+}
+.hint-section .hint-header {
+	width: 100%;
+	border-radius: 20px;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.2em;
+
+}
+.hint-section .hint-header h4 {
+	display: inline-block;
+	text-align: left;
+	margin-left: 5px;
+}
+.hint-section .hint-list {
+	list-style: none;
+	text-align: left;
+	font-size: 0.9em;
+	display:flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content:center;
+	width: auto;
+}
+
+.hint-section .hint-list li {
+}
+@media (max-width: 600px){
+	.exercise-tracker {
+		grid-template-areas: 
+			"header header"
+			"fetch fetch"
+			"user user"
+			"exercise exercise";
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr 2fr;
+	}
+	.exercise-tracker header {
+		font-size: 0.8em;
+	}
+	.form button {
+		font-size: 0.9em;
+	}
+	.hint-section .hint-list {
+		font-size: 0.85em;
+	}
+}
