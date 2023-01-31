@@ -76,6 +76,9 @@ body::-webkit-scrollbar-thumb {
 	border-radius: 30px;
 	backdrop-filter: blur(2px);
 }
+.exercise-tracker header span h1 {
+	margin-bottom: 5px;
+}
 .exercise-tracker header i.fa-bars-progress {
 	font-size: 2em;
 	margin-left: 5px;
@@ -172,13 +175,14 @@ section header i.fa-circle-user {
 }
 
 .form .input-section input.form-input {
+	appearance: none;
 	color: var(--default-text-color);
 	outline: none;
 	border: none;
 	height: 100%;
 	width: 100%;
 	font-size: 1.05em;
-	background: transparent;
+	background: none;
 	padding: 5px 10px;
 	border-radius: 10px;
 	margin: 10px 0;
@@ -188,6 +192,11 @@ section header i.fa-circle-user {
 .form .input-section input.form-input::placeholder {
 	color: var(--default-text-color);
 	font-family: var(--default-font);
+}
+.error-message {
+	font-size: 12px;
+	color: palevioletred;
+	font-weight: bolder;
 }
 .form button {
 	margin-top: 5px;
@@ -201,6 +210,12 @@ section header i.fa-circle-user {
 	font-family: var(--default-font);
 	border-radius: 10px;
 	width: 50%;
+	cursor: pointer;
+	transition: box-shadow, 100ms ease-in-out;
+}
+.form button:hover {
+	box-shadow: 0 0 10px var(--button-bg-color);
+	transition: box-shadow, 100ms ease-in-out;
 }
 .form header {
 	text-align: center;

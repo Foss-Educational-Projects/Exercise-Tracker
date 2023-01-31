@@ -51,13 +51,13 @@
                             <input
                                 id='uname'
                                 type='text'
-                                name='uname'
+                                name='create_uname'
                                 class='form-input'
                                 placeholder='Username'
                             />
                              <i class="fa-solid fa-asterisk"></i>
                         </article>
-                        
+                        <p class="error-message">Username Invalid</p>
                         <button
                             type='submit'
                             class='user-form-btn form-btn'>Create User</button>
@@ -96,13 +96,24 @@
                             <i class="fa-solid fa-asterisk"></i>
                         </article>
                         <article class="input-section">
-                            <i class="fa-solid fa-file"></i>
+                            <i class="fa-solid fa-circle-user"></i>
+                            <input
+                                id='exercise-username'
+                                type='text'
+                                name='exercise-username'
+                                class='form-input'
+                                placeholder='Username'
+                            />
+                            <i class="fa-solid fa-asterisk"></i>
+                        </article>
+                        <article class="input-section">
+                            <i class="bi bi-pen-fill"></i>
                             <input
                                 id='desc'
                                 type='text'
                                 name='description'
                                 class='form-input'
-                                placeholder='Description*'
+                                placeholder='Description'
                             />
                             <i class="fa-solid fa-asterisk"></i>
                         </article>
@@ -128,6 +139,7 @@
                             />
                             <i class="fa-solid fa-asterisk"></i>
                         </article>
+                        <p class="error-message">Username Invalid</p>
                         <button
                             type='submit'
                             class='exercise-form-btn form-btn'

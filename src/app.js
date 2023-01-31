@@ -5,15 +5,18 @@ const cors = require('cors')
 const hbs = require('express-handlebars')
 
 const app = express()
+const router = express.Router();
 
+const { db } = require('./utils/db')
 const { server } = require('./utils/server')
-const { extname } = require('path')
+
+const { User } = require('./schemas/userSchema')
 
 const hbsConfig = hbs.create({
     layoutsDir: path.join(__dirname, 'views'),
     encoding: 'utf8',
     extname: '.hbs',
-    defaultLayout: 'index',
+    defaultLayout: 'index'
 })
 
 app.engine('handlebars', hbs.engine(hbsConfig))
@@ -28,5 +31,10 @@ app.use(express.static(path.join(__dirname, '../public')))
 app.get('/', (req, res) => {
     res.render('index.hbs')
 })
-
-app.listen(process.env.PORT, server)
+app.post("/api/users", async (req, res) => {
+    let uname = await req.body.create_uname;
+    let user = new User({ uname: uname })
+    await user.save().then(() => console.log("Saved To MDB"))
+    res.json({ name: user })
+})
+app.listen(process.env.PORT, server(db))
