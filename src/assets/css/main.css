@@ -183,12 +183,16 @@ section header i.fa-circle-user {
 	width: 100%;
 	font-size: 1.05em;
 	background: none;
+	background-color: transparent;
 	padding: 5px 10px;
 	border-radius: 10px;
 	margin: 10px 0;
-	
+	box-shadow: none;	
 }
-
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px rgba(0,0,0,0.5) inset !important;
+  -webkit-text-fill-color: white !important;
+}
 .form .input-section input.form-input::placeholder {
 	color: var(--default-text-color);
 	font-family: var(--default-font);
