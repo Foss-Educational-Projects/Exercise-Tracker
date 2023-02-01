@@ -3,7 +3,8 @@ require('dotenv').config()
 const path = require('path')
 const express = require('express')
 const cors = require('cors')
-const hbs = require('express-handlebars')
+const hbs = require('hbs')
+const handlebars = require('express-handlebars')
 
 // Instances
 const app = express()
@@ -20,7 +21,8 @@ const appRoute = require('./routes/appRoute')
 const { hbsConfig } = require('./configs/hbsConfig')
 
 // Settings
-app.engine('handlebars', hbs.engine(hbsConfig))
+hbs.registerPartials(path.join(__dirname, "/views/partials/"))
+app.engine('handlebars', handlebars.engine(hbsConfig))
 app.set('view engine', 'handlebars')
 app.set('views', path.join(__dirname, 'views'))
 app.use(cors())

@@ -1,0 +1,79 @@
+<section class='add-exercise-section'>
+    <header class="add-exercise-header">
+        <i class="fa-solid fa-dumbbell"></i>
+        <h2>Add An Exercise</h2>
+        <i class="fa-solid fa-dumbbell"></i>
+    </header>
+    <form id='add-exercise-form' class="add-exercise-form form" method='POST'>
+        <article class="input-section">
+            <i class="fa-solid fa-signature"></i>
+            <input
+                id='uid'
+                type='text'
+                name='exercise_id'
+                class='form-input'
+                placeholder='ID'
+            />
+            <i class="fa-solid fa-asterisk"></i>
+        </article>
+        <article class="input-section">
+            <i class="fa-solid fa-circle-user"></i>
+            <input
+                id='exercise-username'
+                type='text'
+                name='exercise_username'
+                class='form-input'
+                placeholder='Username'
+            />
+            <i class="fa-solid fa-asterisk"></i>
+        </article>
+        <article class="input-section">
+            <i class="bi bi-pen-fill"></i>
+            <input
+                id='desc'
+                type='text'
+                name='exercise_description'
+                class='form-input'
+                placeholder='Description'
+            />
+            <i class="fa-solid fa-asterisk"></i>
+        </article>
+        <article class="input-section">
+            <i class="fa-solid fa-stopwatch"></i>
+            <input
+                id='dur'
+                type='text'
+                name='exercise_duration'
+                class='form-input'
+                placeholder='Duration(Mins)'
+            />
+            <i class="fa-solid fa-asterisk"></i>
+        </article>
+        <article class="input-section">
+            <i class="fa-solid fa-calendar-days"></i>
+            <input
+                id='date'
+                type='text'
+                name='exercise_date'
+                class='form-input'
+                placeholder='Date(YYYY-MM-DD)'
+            />
+            <i class="fa-solid fa-asterisk"></i>
+        </article>
+        <p class="error-message">Username Invalid</p>
+        <button
+            type='submit'
+            class='exercise-form-btn form-btn'
+        >Add Exercises</button>
+    </form>
+    <aside class="hint-section">
+        <header class="hint-header">
+            <i class="fa-solid fa-lightbulb"></i>
+            <h4>Hints</h4>
+        </header><!-- /header -->
+        <ol class="hint-list">
+            <li>* Provide Correct Details</li>
+            <li>* All * Marked Fields Are Required</li>
+        </ol>
+    </aside>
+</section>

@@ -1,0 +1,38 @@
+<section class='create-user-section'>
+    <header class="create-user-header">
+        <i class="fa-solid fa-circle-user"></i>
+        <h2>Create New User</h2>
+        <i class="fa-solid fa-circle-user"></i>
+    </header>
+    <form action='/api/users' method='post' id="create-user-form" class="create-user-form form">
+        <article class="input-section">
+            <i class="fa-solid fa-user"></i>
+            <input
+                id='uname'
+                type='text'
+                name='create_uname'
+                class='form-input'
+                placeholder='Username'
+            />
+             <i class="fa-solid fa-asterisk"></i>
+        </article>
+        <p class="error-message">Username Invalid</p>
+        <button
+            type='submit'
+            class='user-form-btn form-btn'>Create User</button>
+    </form>
+    <aside class="hint-section">
+        <header class="hint-header">
+            <i class="fa-solid fa-lightbulb"></i>
+            <h4>Hints</h4>
+        </header>
+        <ul class="hint-list">
+            <li>* Username Must Contain:</li>
+            <li>* Atleast 1 Uppercase Character</li>
+            <li>* Atleast 1 Lowercase Character</li>
+            <li>* Atleast 1 Digit </li>
+            <li>* Must Be Within 8-16 Characters</li>
+            <li>* All * Marked Fields Are Required</li>
+        </ul>
+    </aside>
+</section>

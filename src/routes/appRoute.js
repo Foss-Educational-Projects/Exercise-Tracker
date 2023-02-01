@@ -5,10 +5,10 @@ const router = express.Router()
 // Controllers
 const { 
 	getIndexPage, 
-	createUser, 
-	createExercise,  
 	getExerciseById,
-	getExerciseByUsername
+	getExerciseByUsername,
+	createUser, 
+	createExercise
 } = require('./../controllers/appController')
 
 //  Routes
@@ -16,7 +16,7 @@ router.get("/", getIndexPage)
 
 router.get("/api/users/:_id/logs?[from][&to][&limit]", getExerciseById)
 
-router.get("/api/users/:username/")
+router.get("/api/users/:username/", getExerciseByUsername)
 
 router.post("/api/users", createUser)
 
