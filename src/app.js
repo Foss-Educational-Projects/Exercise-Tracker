@@ -26,7 +26,6 @@ app.engine('handlebars', handlebars.engine(hbsConfig))
 app.set('view engine', 'handlebars')
 app.set('views', path.join(__dirname, 'views'))
 app.use(cors())
-app.use(router)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'assets')))
@@ -34,6 +33,7 @@ app.use(express.static(path.join(__dirname, '../public')))
 
 // Routes
 router.use("/", appRoute);
+app.use(router)
 
 // Server
 app.listen(process.env.PORT, server(db))

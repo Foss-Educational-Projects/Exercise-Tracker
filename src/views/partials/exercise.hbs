@@ -4,7 +4,7 @@
         <h2>Add An Exercise</h2>
         <i class="fa-solid fa-dumbbell"></i>
     </header>
-    <form id='add-exercise-form' class="add-exercise-form form" method='POST'>
+    <form id='add-exercise-form' class="add-exercise-form form" action="" method='POST'>
         <article class="input-section">
             <i class="fa-solid fa-signature"></i>
             <input
@@ -60,7 +60,7 @@
             />
             <i class="fa-solid fa-asterisk"></i>
         </article>
-        <p class="error-message">Username Invalid</p>
+        <p class="error-message">{{ exerciseErr.id }}</p>
         <button
             type='submit'
             class='exercise-form-btn form-btn'
