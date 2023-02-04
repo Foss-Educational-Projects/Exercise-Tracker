@@ -21,18 +21,18 @@
             <input
                 id='exercise-username'
                 type='text'
-                name='exercise_username'
+                name='workout_username'
                 class='form-input'
                 placeholder='Username'
             />
-            <i class="fa-solid fa-asterisk"></i>
+            {{!-- <i class="fa-solid fa-asterisk"></i> --}}
         </article>
         <article class="input-section">
             <i class="bi bi-pen-fill"></i>
             <input
-                id='desc'
+                id='description'
                 type='text'
-                name='exercise_description'
+                name='workout_description'
                 class='form-input'
                 placeholder='Description'
             />
@@ -41,9 +41,9 @@
         <article class="input-section">
             <i class="fa-solid fa-stopwatch"></i>
             <input
-                id='dur'
+                id='duration'
                 type='text'
-                name='exercise_duration'
+                name='workout_duration'
                 class='form-input'
                 placeholder='Duration(Mins)'
             />
@@ -54,11 +54,11 @@
             <input
                 id='date'
                 type='text'
-                name='exercise_date'
+                name='workout_date'
                 class='form-input'
                 placeholder='Date(YYYY-MM-DD)'
             />
-            <i class="fa-solid fa-asterisk"></i>
+            {{!-- <i class="fa-solid fa-asterisk"></i> --}}
         </article>
         <p class="error-message">{{ exerciseErr.id }}</p>
         <button
@@ -70,7 +70,7 @@
         <header class="hint-header">
             <i class="fa-solid fa-lightbulb"></i>
             <h4>Hints</h4>
-        </header><!-- /header -->
+        </header>
         <ol class="hint-list">
             <li>* Provide Correct Details</li>
             <li>* All * Marked Fields Are Required</li>

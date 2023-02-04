@@ -21,7 +21,8 @@ router.get("/api/users/:_id/logs", getExerciseById)
 
 // router.get("/api/users/:username/", getExerciseByUsername)
 
+
 router.post("/api/users", createUser) // Finished
-router.post("/api/users/:id/exercises", createExercise)
+router.post("/api/users/:_id/exercises", createExercise) // Finished
 
 module.exports = router;
