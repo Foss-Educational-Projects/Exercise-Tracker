@@ -13,17 +13,18 @@ const { dateOptions } = require('./../configs/date')
 // Error(Client-Side)
 let exerciseError = {
 	id: "",
-	uname: ""
+	uname: "",
+	description: "",
+	duration: ""
 }
 let error;
 
 // Controllers
 
 // Sends The Home Page To Client
-const getIndexPage = (req, res) => {
-	res.render('index.hbs', { unameErr: error, exerciseErr: exerciseError })
+const getIndexPage = async (req, res) => {
+	await res.render('index.hbs', { unameErr: error, exerciseErr: exerciseError })
 }
-
 // Gives Back Users If ID Matches
 const getUserById = async (req, res) => {
 	let id = req.params._id;
@@ -45,9 +46,11 @@ const getExerciseById = async (req, res) => {
 		limit: req.query.limit
 	};
 	let data = await User.find({ _id: id })
-	if (data.length !== 0) {		
-		res.json({ data })
+	
+	if (data.length !== 0) {	
+		await res.json(data)
 	}
+
 	else {
 		res.json({ error: "No Records Found" })
 	}
@@ -62,7 +65,7 @@ const getAllUsers = async (req, res) => {
 
 // Creates a New User
 const createUser = async (req, res) => {
-	let uname = await req.body.create_uname;
+	let uname = await req.body.username;
 	if (uname) {
 		let user = new User({ username: uname })
 		await user
@@ -77,23 +80,46 @@ const createUser = async (req, res) => {
 		res.redirect("/")
 	}
 }
-
+// Redirects The Data From Index Page To Another Page Via POST Request 
+const getData = (req, res) => {
+	let workout = {
+		id: req.body.workout_id,
+		uname: req.body.workout_username,
+		description: req.body.workout_description,
+		duration: req.body.workout_duration,
+		date: req.body.workout_date,
+	}
+	if(!workout.description && !workout.duration){
+		!workout.duration ? exerciseError.duration = "Duration Is Empty" : exerciseError.duration = ""
+		!workout.description ? exerciseError.description = "Description Is Empty" : exerciseError.description = ""
+		res.redirect("/")
+	}
+	else {
+		res.redirect(
+			307, 
+			`/api/users/${workout.id}/exercises
+			?uname=${workout.uname}
+			&description=${workout.description}
+			&duration=${workout.duration}
+			&date=${workout.date}
+			`)
+	}
+}
 // Creates New Exercise For Given Users
 const createExercise = async (req, res) => {
 	const formDate = await req.body.workout_date;
 	const time = new Date().toTimeString().split(" ")[0]
-	let dateTime = !formDate ? 
+	let dateTime = !formDate || !req.query.date ? 
 		new Date().toLocaleDateString("en-US", dateOptions).toString() : 
 		new Date(formDate.concat(`T${time}`)).toString()
 
 	let exercise = {
 		id: req.params._id,
-		description: await req.body.workout_description,
-		duration: await req.body.workout_duration,
-		date: dateTime
+		description: await req.body.workout_description || req.query.description,
+		duration: await req.body.workout_duration || req.query.duration,
+		date: dateTime 
 	}
-
-	let user = await User.find({ _id: exercise.id })
+	let user = await User.findById({ _id: exercise.id })
 	if (user.length !== 0) {
 		await User.findOneAndUpdate(
 			{ _id: exercise.id }, 
@@ -104,22 +130,26 @@ const createExercise = async (req, res) => {
 						duration: exercise.duration, 
 						date: exercise.date
 					}
+				},
+
+				$set:{
+				 	count: user.logs.length
 				}
 			},
 			{ new: true }
 		)
 			.then(() => {
-				console.log("Exercise Saved") 
-				console.log(exercise)
-			})
-			.catch((err) => console.error(err))
-		let data = await User.find({ _id: exercise.id })
-		res.json(data)
-		res.end()
+		console.log("Exercise Saved") 
+		console.log(exercise)
+	})
+	.catch((err) => console.error(err))
+	let data = await User.find({ _id: exercise.id })
+	res.json(data)
+	res.end()
 	}
 	else {
-		res.json({ error: `User With ID: ${exercise.id} Doesnt Exist` })
-	}
+	res.json({ error: `User With ID: ${exercise.id} Doesnt Exist` })
+}
 }
 
 module.exports = { 
@@ -127,6 +157,7 @@ module.exports = {
 	getExerciseById,
 	getUserById,
 	getAllUsers,
+	getData,
 	createUser, 
 	createExercise 
 }
