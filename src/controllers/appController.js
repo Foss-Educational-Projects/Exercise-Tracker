@@ -37,6 +37,31 @@ const getUserById = async (req, res) => {
 	}
 }
 
+//  Gives All Users As JSON Output
+const getAllUsers = async (req, res) => {
+	let data = await User.find({}, "_id username")
+	res.json(data)
+	res.end()
+}
+// Get Users By Username
+
+const getUserByUsername = async (req, res) => {
+	let uname = await req.params.username;
+	if (uname) {
+		let user = new User({ username: uname })
+		await user
+			.save()
+			.then(() => console.log("Saved To Database"))
+			.catch((err) => console.error(err))
+		let data = await User.find({ username: uname }, "_id username")
+		res.json(data)
+	}
+	else {
+		error = "Username is Empty"
+		res.redirect("/")
+	}
+}
+
 // Gets User Specific Exercises
 const getExerciseById = async (req, res) => {
 	let id = req.params._id;
@@ -54,13 +79,6 @@ const getExerciseById = async (req, res) => {
 	else {
 		res.json({ error: "No Records Found" })
 	}
-}
-
-//  Gives All Users As JSON Output
-const getAllUsers = async (req, res) => {
-	let data = await User.find({}, "_id username")
-	res.json(data)
-	res.end()
 }
 
 // Creates a New User
@@ -84,10 +102,10 @@ const createUser = async (req, res) => {
 const getData = (req, res) => {
 	let workout = {
 		id: req.body.workout_id,
-		uname: req.body.workout_username,
-		description: req.body.workout_description,
-		duration: req.body.workout_duration,
-		date: req.body.workout_date,
+		uname: req.body.username,
+		description: req.body.description,
+		duration: req.body.duration,
+		date: req.body.date,
 	}
 	if(!workout.description && !workout.duration){
 		!workout.duration ? exerciseError.duration = "Duration Is Empty" : exerciseError.duration = ""
@@ -102,7 +120,7 @@ const getData = (req, res) => {
 }
 // Creates New Exercise For Given Users
 const createExercise = async (req, res) => {
-	const formDate = await req.body.workout_date;
+	const formDate = await req.body.date;
 	const time = new Date().toTimeString().split(" ")[0]
 	let dateTime = !formDate || !req.query.date ? 
 		new Date().toLocaleDateString("en-US", dateOptions).toString() : 
@@ -110,8 +128,8 @@ const createExercise = async (req, res) => {
 
 	let exercise = {
 		id: req.params._id,
-		description: await req.body.workout_description || req.query.description,
-		duration: await req.body.workout_duration || req.query.duration,
+		description: await req.body.description || req.query.description,
+		duration: await req.body.duration || req.query.duration,
 		date: dateTime 
 	}
 	let user = await User.findById({ _id: exercise.id })
@@ -154,5 +172,6 @@ module.exports = {
 	getAllUsers,
 	getData,
 	createUser, 
+	getUserByUsername,
 	createExercise 
 }

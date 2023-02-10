@@ -8,6 +8,7 @@ const {
 	getUserById,
 	getAllUsers,
 	getData,
+	getUserByUsername,
 	getExerciseById,
 	createUser, 
 	createExercise
@@ -17,12 +18,11 @@ const {
 router.get("/", getIndexPage) // Finished
 router.get("/api/users", getAllUsers) // Finished
 router.get("/api/users/:_id", getUserById) // Finished
-
 router.get("/api/users/:_id/logs", getExerciseById)
 
-// router.get("/api/users/:username/", getExerciseByUsername)
-router.post("/", getData)
+router.post("/", getData) // Finished
 router.post("/api/users", createUser) // Finished
+router.post("/api/users/:username", getUserByUsername) // Finished
 router.post("/api/users/:_id/exercises", createExercise) // Finished
 
 module.exports = router;
