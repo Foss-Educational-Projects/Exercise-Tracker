@@ -97,12 +97,7 @@ const getData = (req, res) => {
 	else {
 		res.redirect(
 			307, 
-			`/api/users/${workout.id}/exercises
-			?uname=${workout.uname}
-			&description=${workout.description}
-			&duration=${workout.duration}
-			&date=${workout.date}
-			`)
+			`/api/users/${workout.id}/exercises`)
 	}
 }
 // Creates New Exercise For Given Users
