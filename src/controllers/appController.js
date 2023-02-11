@@ -101,7 +101,7 @@ const createUser = async (req, res) => {
 // Redirects The Data From Index Page To Another Page Via POST Request 
 const getData = (req, res) => {
 	let workout = {
-		id: req.body.workout_id,
+		id: req.body._id,
 		uname: req.body.username,
 		description: req.body.description,
 		duration: req.body.duration,
@@ -127,7 +127,7 @@ const createExercise = async (req, res) => {
 		new Date(formDate.concat(`T${time}`)).toString()
 
 	let exercise = {
-		id: req.params._id,
+		id: req.params._id || req.body._id,
 		description: await req.body.description || req.query.description,
 		duration: await req.body.duration || req.query.duration,
 		date: dateTime 
@@ -138,7 +138,7 @@ const createExercise = async (req, res) => {
 			{ _id: exercise.id }, 
 			{
 				$push: {
-					logs: {
+					log: {
 						description: exercise.description, 
 						duration: exercise.duration, 
 						date: exercise.date
@@ -146,7 +146,7 @@ const createExercise = async (req, res) => {
 				},
 
 				$set:{
-				 	count: user.logs.length
+				 	count: user.log.length
 				}
 			},
 			{ new: true }
@@ -156,7 +156,7 @@ const createExercise = async (req, res) => {
 		console.log(exercise)
 	})
 	.catch((err) => console.error(err))
-	let data = await User.find({ _id: exercise.id })
+	let data = await User.findById({ _id: exercise.id }, "_id username log[-1]")
 	res.json(data)
 	res.end()
 	}

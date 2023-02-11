@@ -1,7 +1,8 @@
 const dateOptions = {
-		year: "numeric",
-		month: "long",
-		day: "numeric"
+	weekday: "short",
+	day: "numeric",
+	month: "short",
+	year: "numeric"
 }
 
 module.exports = { dateOptions }

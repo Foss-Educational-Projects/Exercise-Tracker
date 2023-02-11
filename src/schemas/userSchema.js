@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
 	username: String,
 	count: Number,
-	logs: [
+	log: [
 			{
 				description: String,
 				duration: Number,
