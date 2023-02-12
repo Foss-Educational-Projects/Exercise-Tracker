@@ -126,16 +126,20 @@ const createExercise = async (req, res) => {
 		new Date().toLocaleDateString("en-US", dateOptions).toString() : 
 		new Date(formDate.concat(`T${time}`)).toString()
 
+	let userName = await User.findById({ _id: req.body._id }, " -_id username")
+
 	let exercise = {
-		id: req.params._id || req.body._id,
+		_id: req.params._id || req.body._id,
+		username: userName.username,
 		description: await req.body.description || req.query.description,
-		duration: await req.body.duration || req.query.duration,
+		duration: parseInt(req.body.duration) || parseInt(req.query.duration),
 		date: dateTime 
 	}
-	let user = await User.findById({ _id: exercise.id })
+	let user = await User.findById({ _id: exercise._id })
+
 	if (user.length !== 0) {
 		await User.findOneAndUpdate(
-			{ _id: exercise.id }, 
+			{ _id: exercise._id }, 
 			{
 				$push: {
 					log: {
@@ -146,7 +150,7 @@ const createExercise = async (req, res) => {
 				},
 
 				$set:{
-				 	count: user.log.length
+				 	count: user.log.length + 1
 				}
 			},
 			{ new: true }
@@ -156,12 +160,11 @@ const createExercise = async (req, res) => {
 		console.log(exercise)
 	})
 	.catch((err) => console.error(err))
-	let data = await User.findById({ _id: exercise.id }, "_id username log[-1]")
-	res.json(data)
+	res.json(exercise)
 	res.end()
 	}
 	else {
-	res.json({ error: `User With ID: ${exercise.id} Doesnt Exist` })
+	res.json({ error: `User With ID: ${exercise._id} Doesnt Exist` })
 }
 }
 
