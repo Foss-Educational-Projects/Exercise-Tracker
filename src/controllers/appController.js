@@ -53,7 +53,7 @@ const getUserByUsername = async (req, res) => {
 			.catch((err) => console.error(err))
 		let data = await User.find({ username: uname }, "_id username")
 		let result;
-		if(data.length > 1) {
+		if (data.length > 1) {
 			result = data[0];
 		}
 		else {
@@ -75,13 +75,14 @@ const getExerciseById = async (req, res) => {
 		to: req.query.to,
 		limit: req.query.limit
 	};
-	let data = await User.find({ _id: id }, "-log._id")
 	
-	if (data.length !== 0) {	
-		await res.json(data)
+	try {
+		let data = await User.find({ _id: id }, "-log._id")
+		if (data.length !== 0) {	
+			await res.json(data[0])
+		}
 	}
-
-	else {
+	catch {
 		res.json({ error: "No Records Found" })
 	}
 }
@@ -95,15 +96,8 @@ const createUser = async (req, res) => {
 			.save()
 			.then(() => console.log("Saved To Database"))
 			.catch((err) => console.error(err))
-		let data = User.findOne({ username: uname }, "_id username", { lean: toObject })
-		if (data.length > 1) {
-			console.log("1st")
-			res.json({data})
-		}
-		else {
-			console.log("2nd")
-			res.json({data})
-		}
+		let data = await User.findOne({ username: uname }, "_id username").lean()
+		res.json(data)
 	}
 			
 	else {
@@ -136,10 +130,10 @@ const createExercise = async (req, res) => {
 	const formDate = req.body.date;
 	console.log(formDate)
 	let dateTime = !formDate ? 
-		new Date().toDateString("en-US", dateOptions).toString() : 
-		new Date(formDate).toDateString("en-US", dateOptions).toString()
+		new Date().toDateString("en-US", dateOptions) : 
+		new Date(formDate).toDateString("en-US", dateOptions)
 	let userName;
-	if(!req.body._id){
+	if (!req.body._id) {
 		userName = await User.findById({ _id: req.params._id }, " -_id username")
 	}
 	else {
@@ -150,7 +144,7 @@ const createExercise = async (req, res) => {
 		username: userName.username,
 		description: await req.body.description || req.query.description,
 		duration: parseInt(req.body.duration) || parseInt(req.query.duration),
-		date: dateTime 
+		date: dateTime
 	}
 	let user = await User.findById({ _id: exercise._id })
 	console.log(user)
