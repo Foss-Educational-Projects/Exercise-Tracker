@@ -90,6 +90,7 @@ const getExerciseById = async (req, res) => {
 // Creates a New User
 const createUser = async (req, res) => {
 	let uname = await req.body.username;
+	console.log(uname)
 	if (uname) {
 		let user = new User({ username: uname })
 		await user
