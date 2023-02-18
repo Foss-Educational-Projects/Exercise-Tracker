@@ -70,27 +70,48 @@ const getUserByUsername = async (req, res) => {
 // Gets User Specific Exercises
 const getExerciseById = async (req, res) => {
 	let id = req.params._id;
-	let logQueries = {
-		from: req.query.from,
-		to: req.query.to,
-		limit: req.query.limit
-	};
-	
-	try {
-		let data = await User.find({ _id: id }, "-log._id")
-		if (data.length !== 0) {	
-			await res.json(data[0])
+	let { from, to, limit } = req.query;
+	let temp = await User.findById({ _id: id }, "-_id -username -count -__v")
+	let log = temp.log;
+	let username = await User.findById({ _id: id }, "username")
+	if (from) {
+		const fromDate = new Date(from)
+		log = log.filter(exe => new Date(exe.date) > fromDate)
+	}
+	if (to) {
+		const toDate = new Date(to)
+		log = log.filter(exe => new Date(exe.date) < toDate)
+	}
+	if (limit) {
+		log = log.slice(0, limit)
+	}
+	if (from || to || limit) {
+		res.json({
+			_id: id,
+			username: username,
+			count: log.length,
+			from: new Date(from).toDateString("en-US", dateOptions),
+			to: new Date(to).toDateString("en-US", dateOptions),
+			log
+		})
+	}
+	else {
+		try {
+			let data = await User.find({ _id: id }, "-_id -username -count -__v")
+			if (data.length !== 0) {	
+				await res.json(data)
+			}
+		}
+		catch {
+			res.json({ error: "No Records Found" })
 		}
 	}
-	catch {
-		res.json({ error: "No Records Found" })
-	}
+	
 }
 
 // Creates a New User
 const createUser = async (req, res) => {
 	let uname = await req.body.username;
-	console.log(uname)
 	if (uname) {
 		let user = new User({ username: uname })
 		await user
@@ -129,7 +150,6 @@ const getData = (req, res) => {
 // Creates New Exercise For Given Users
 const createExercise = async (req, res) => {
 	const formDate = req.body.date;
-	console.log(formDate)
 	let dateTime = !formDate ? 
 		new Date().toDateString("en-US", dateOptions) : 
 		new Date(formDate).toDateString("en-US", dateOptions)
@@ -148,7 +168,6 @@ const createExercise = async (req, res) => {
 		date: dateTime
 	}
 	let user = await User.findById({ _id: exercise._id })
-	console.log(user)
 	if (await user.length !== 0) {
 		await User.findOneAndUpdate(
 			{ _id: exercise._id }, 
