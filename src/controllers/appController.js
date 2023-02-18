@@ -97,7 +97,7 @@ const getExerciseById = async (req, res) => {
 	}
 	else {
 		try {
-			let data = await User.find({ _id: id }, "-_id -username -count -__v")
+			let data = await User.find({ _id: id }, "-__v")
 			if (data.length !== 0) {	
 				await res.json(data[0])
 			}
