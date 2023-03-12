@@ -1,6 +1,6 @@
 # Exercise Tracker
 
-## `Create, View Exercises And Sort Them`
+## `Create, View & Sort Exercises`
 
 ### How To Setup Locally ?
 - install __NodeJS__(https://nodejs.dev)
