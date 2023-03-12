@@ -23,8 +23,10 @@ const { hbsConfig } = require('./configs/hbsConfig')
 // Settings
 hbs.registerPartials(path.join(__dirname, "/views/partials/"))
 app.engine('handlebars', handlebars.engine(hbsConfig))
+
 app.set('view engine', 'handlebars')
 app.set('views', path.join(__dirname, 'views'))
+
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

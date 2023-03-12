@@ -22,17 +22,25 @@ let error;
 // Sends The Home Page To Client
 const getIndexPage = async (req, res) => {
 	await res.render('index.hbs', { unameErr: error, exerciseErr: exerciseError })
+	Object.keys(exerciseError).forEach((index) => exerciseError[index] = "")
 }
 // Gives Back Users If ID Matches
 const getUserById = async (req, res) => {
 	let id = req.params._id;
-	let data = await User.find({ _id: id })
-	if (data.length === 0) {
-		res.json({ error: "No Users Found" })
+	try {
+		let data = await User.find({ _id: id })
+		if (data.length === 0) {
+			res.json({ error: "No Users Found" })
+		}
+		else {
+			res.json({ uname: data[0].uname, _id: data[0]._id })
+		}
 	}
-	else {
-		res.json({ uname: data[0].uname, _id: data[0]._id })
+	catch (err) {
+		console.error(err)
 	}
+	
+	
 }
 
 //  Gives All Users As JSON Output
@@ -112,7 +120,7 @@ const getExerciseById = async (req, res) => {
 // Creates a New User
 const createUser = async (req, res) => {
 	let uname = await req.body.username;
-	if (uname) {
+	if (uname && regex.username.test(uname)) {
 		let user = new User({ username: uname })
 		await user
 			.save()
@@ -123,7 +131,7 @@ const createUser = async (req, res) => {
 	}
 			
 	else {
-		error = "Username is Empty"
+		error = "Username is Empty Or Not Valid"
 		res.redirect("/")
 	}
 }
@@ -188,7 +196,6 @@ const createExercise = async (req, res) => {
 		)
 			.then(() => {
 				console.log("Exercise Saved") 
-				console.log(exercise)
 			})
 			.catch((err) => console.error(err))
 		res.json(exercise)

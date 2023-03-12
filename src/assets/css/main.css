@@ -50,8 +50,7 @@ body::-webkit-scrollbar-thumb {
     display: grid;
 	grid-template-areas: 
 	"header header"
-	"user exercise"
-	"fetch fetch";
+	"user exercise";
 	grid-auto-rows: minmax(400px, auto);
 	grid-auto-flow: row;
 	grid-gap: 10px;
@@ -266,7 +265,6 @@ input:-webkit-autofill {
 	.exercise-tracker {
 		grid-template-areas: 
 			"header header"
-			"fetch fetch"
 			"user user"
 			"exercise exercise";
 		grid-template-columns: 1fr;
